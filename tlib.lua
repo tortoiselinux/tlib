@@ -17,7 +17,7 @@ function tlib.import(full_path)
    end
    
    if not modname then
-      error("Caminho inválido. Certifique-se de que há um nome de módulo válido.")
+      error("Invalid path. Make shure that has a valid module name.")
    end
    
    package.path = package.path .. string.format(";./%s/?.lua", path)
@@ -59,6 +59,24 @@ function tlib.read_file(filename)
    local file = io.open(filename)
    content = file:read("*a")
    return content
+end
+
+function tlib.mkdir(dir)
+   tlib.run("mkdir " .. dir)
+end
+
+function tlib.ls(dir)
+   tlib.run("ls " .. dir)
+end
+
+function tlib.rmdir(dir)
+   ok, err = os.remove(dir)
+end
+
+function tlib.mkfile(filename)
+   file = io.open(filename)
+   file:write("")
+   file:close()
 end
 
 function tlib.file_exist(filename)

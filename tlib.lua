@@ -33,13 +33,11 @@ end
 
 function tlib.exec(...)
    local cmd = tlib.parse_args(...)
-   print("executando comando: " .. cmd)
    return os.execute(cmd)
 end
 
 function tlib.run(...)
    local cmd = tlib.parse_args(...)
-   -- print(cmd)
    local out = io.popen(cmd .. " 2>&1")
    local result = out:read("*a")
    local success, exit_code = out:close()

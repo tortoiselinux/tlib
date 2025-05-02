@@ -25,6 +25,27 @@ function tlib.import(full_path)
    return require(modname), package.path, path, modname
 end
 
+local debug_info = debug.getinfo(1, "S")
+tlib.__dirname = debug_info.source:gsub("@", ""):match("(.*/)")
+tlib.__filename = debug_info.source:gsub("@", ""):match("([^/]+)$")
+
+function tlib.fmt(msg, ...)
+   return string.format(msg, ...)
+end
+
+function tlib.printf(msg, ...)
+    io.write(string.format(msg, ...))
+end
+
+function tlib.println(msg, ...)
+    tlib.printf(msg .. "\n", ...)
+end
+
+function tlib.exit(code)
+    os.exit(code)
+end
+
+
 function tlib.parse_args(...)
    local args = {...}
    local cmd = table.concat(args, " ")

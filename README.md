@@ -26,8 +26,8 @@ local tlib = require("tlib")
 as a regular lua library, you can easily put that in the LUA_LIBPATH
 that is usually /usr/lib/lua/5.x
 
-	mv /usr/lib/lua/5.x
-	
+    mv /usr/lib/lua/5.x
+
 then, you can import using require.
 
 I like to have Tlib as a git submodule in my projects that i've use it
@@ -38,7 +38,7 @@ to import Tlib from a directory in you project tree you can do:
 ```Lua
 -- put tlib repository in LUA_PATH
 	package.path = package.path .. string.format(";./%s/?.lua", "<your_submodulepath>/tlib")
-	
+
 local tlib = require("tlib")
 ```
 
@@ -58,11 +58,12 @@ tlib inside a directory that already is in `LUA_PATH`.
 ```Lua
 -- put tlib repository in LUA_PATH
 	package.path = package.path .. string.format(";./%s/?.lua", "<your_submodulepath>/tlib")
-	
+
 local tlib = require("tlib")
 ```
 
 but when you have tlib, you can easily do:
+
 ```Lua
 local module = tlib.import("path/to/module")
 ```
@@ -78,7 +79,6 @@ a .lua extension to import the module.
 You can use this function to parse variadic parameters of
 a function. This is used in tlib by itself to parse arguments
 when is executing shell commands, for example.
-
 
 ```Lua
 function tlib.exec(...)
@@ -99,7 +99,7 @@ end
 #### check arguments
 
 check_args takes a command line argument, a table of supported
-arguments and a function, if the argument passed is equal to one 
+arguments and a function, if the argument passed is equal to one
 of the arguments in the table, the function will be executed
 
 ```Lua
@@ -107,6 +107,7 @@ tlib.check_args(argi, expected, func)
 ```
 
 Use example:
+
 ```Lua
 for i in ipairs(arg) do
 	tlib.check_args(arg[i], {'h', '-h', 'help', '--help'}, help)
@@ -117,6 +118,7 @@ end
 #### Verify args
 
 That function takes two arguments and returns true if both are equivalent
+
 ```Lua
 tlib.verify_args(argi, expected)
 ```
@@ -135,7 +137,6 @@ end
 
 That function takes an argument from argument list using a index number.
 
-
 Use example:
 
 ```Lua
@@ -147,20 +148,23 @@ tlib.get_arg(arg, 2)
 #### Creating Files
 
 To create a empty file use mkfile
+
 ```Lua
 tlib.mkfile(filename)
 ```
 
 But, if you need to write a file with a content and diferent write acess
 you can use the `write_file` function.
+
 ```Lua
 tlib.write_file(filename, access, content)
 ```
+
 if you don't know about access permissions, see the list bellow:
 
 - "r" Read-only mode and is the default mode where an existing file is opened.
 - "w" Write enabled mode that overwrites the existing file or creates a new file.
-- "a" Append mode that opens an existing file or creates a new file for appending.	
+- "a" Append mode that opens an existing file or creates a new file for appending.
 - "r+" Read and write mode for an existing file.
 - "w+" All existing data is removed if file exists or new file is created with read write permissions.
 - "a+" Append mode with read mode enabled that opens an existing file or creates a new file.
@@ -168,6 +172,7 @@ if you don't know about access permissions, see the list bellow:
 list taken from: https://www.tutorialspoint.com/lua/lua_file_io.htm
 
 #### Read Files
+
 To read a file is very simple, just use the `read_file` function that
 returns the file content
 
@@ -205,9 +210,11 @@ tlib.rmdir(dir)
 ```
 
 ### Execute Shell commands
+
 To execute Shell commands we have two functions
 tlib.exec(...)
 tlib.run(...)
+
 ### 📄 **Functions Overview**
 
 #### `tlib.exec(...)`
@@ -222,14 +229,14 @@ Executes a shell command and captures its output (stdout and stderr). Returns th
 
 ### ⚖️ **Comparison: `tlib.exec` vs `tlib.run`**
 
-| Feature                 | `tlib.exec`                          | `tlib.run`                                           |
-|-------------------------|--------------------------------------|------------------------------------------------------|
-| Executes command?       | ✅ Yes                                | ✅ Yes                                                |
-| Captures stdout?        | ❌ No                                 | ✅ Yes                                                |
-| Captures stderr?        | ❌ No                                 | ✅ Yes (via `2>&1`)                                   |
-| Returns exit code?      | ✅ Yes (depends on platform)          | ✅ Yes (detailed with `io.popen`)                     |
-| Use case                | Simple command execution             | Command execution with output inspection             |
-| Richer abstraction?     | ❌ Minimal wrapper                    | ✅ Full-featured with output and error information    |
+| Feature             | `tlib.exec`                  | `tlib.run`                                         |
+| ------------------- | ---------------------------- | -------------------------------------------------- |
+| Executes command?   | ✅ Yes                       | ✅ Yes                                             |
+| Captures stdout?    | ❌ No                        | ✅ Yes                                             |
+| Captures stderr?    | ❌ No                        | ✅ Yes (via `2>&1`)                                |
+| Returns exit code?  | ✅ Yes (depends on platform) | ✅ Yes (detailed with `io.popen`)                  |
+| Use case            | Simple command execution     | Command execution with output inspection           |
+| Richer abstraction? | ❌ Minimal wrapper           | ✅ Full-featured with output and error information |
 
 ---
 
@@ -263,6 +270,7 @@ Executes a shell command and captures its output (stdout and stderr). Returns th
 📄 Dynamically adds a path to `package.path` and imports a Lua module.
 
 💡 Example:
+
 ```lua
 local module = tlib.import("path/to/module")
 ```
@@ -278,6 +286,7 @@ local module = tlib.import("path/to/module")
 📄 Parses variadic arguments into a single command string.
 
 💡 Example:
+
 ```lua
 local cmd = tlib.parse_args("ls", "-la", "/etc")
 -- "ls -la /etc"
@@ -290,6 +299,7 @@ local cmd = tlib.parse_args("ls", "-la", "/etc")
 📄 Executes `func()` if `argi` matches any of the `expected` arguments.
 
 💡 Example:
+
 ```lua
 tlib.check_args(arg[i], {"-h", "--help"}, show_help)
 ```
@@ -301,6 +311,7 @@ tlib.check_args(arg[i], {"-h", "--help"}, show_help)
 📄 Returns `true` if any item in `argi` matches an item in `expected`.
 
 💡 Example:
+
 ```lua
 if tlib.verify_args(arg, {"--yes", "-y"}) then confirm() end
 ```
@@ -312,6 +323,7 @@ if tlib.verify_args(arg, {"--yes", "-y"}) then confirm() end
 📄 Returns the argument at the given index from a list.
 
 💡 Example:
+
 ```lua
 local filename = tlib.get_arg(arg, 2)
 ```
@@ -325,6 +337,7 @@ local filename = tlib.get_arg(arg, 2)
 📄 Writes `content` to a file using the given `access` mode (`"w"`, `"a"`, etc).
 
 💡 Example:
+
 ```lua
 tlib.write_file("data.txt", "w", "hello world")
 ```
@@ -336,6 +349,7 @@ tlib.write_file("data.txt", "w", "hello world")
 📄 Reads and returns the contents of a file.
 
 💡 Example:
+
 ```lua
 local content, err = tlib.read_file("config.txt")
 ```
@@ -372,7 +386,7 @@ local content, err = tlib.read_file("config.txt")
 
 ### `tlib.ls(dir)`
 
-📄 Lists files in the directory using `ls`. *(Output printed directly)*
+📄 Lists files in the directory using `ls`. _(Output printed directly)_
 
 ⚠️ Consider replacing with a version that returns results.
 
@@ -385,6 +399,7 @@ local content, err = tlib.read_file("config.txt")
 📄 Executes a command using `os.execute`. Does not capture output.
 
 💡 Example:
+
 ```lua
 tlib.exec("echo", "Hello")
 ```
@@ -396,6 +411,7 @@ tlib.exec("echo", "Hello")
 📄 Runs a shell command and captures its output (`stdout` + `stderr`).
 
 💡 Example:
+
 ```lua
 local output, ok, code, cmd = tlib.run("ls", "/tmp")
 ```
@@ -404,14 +420,14 @@ local output, ok, code, cmd = tlib.run("ls", "/tmp")
 
 ## 🔍 Comparison: `tlib.exec` vs `tlib.run`
 
-| Feature                 | `tlib.exec`                          | `tlib.run`                                           |
-|-------------------------|--------------------------------------|------------------------------------------------------|
-| Executes command?       | ✅ Yes                                | ✅ Yes                                                |
-| Captures stdout?        | ❌ No                                 | ✅ Yes                                                |
-| Captures stderr?        | ❌ No                                 | ✅ Yes (via `2>&1`)                                   |
-| Returns exit code?      | ✅ Yes (depends on platform)          | ✅ Yes (detailed with `io.popen`)                     |
-| Use case                | Simple command execution             | Command execution with output inspection             |
-| Richer abstraction?     | ❌ Minimal wrapper                    | ✅ Full-featured with output and error information    |
+| Feature             | `tlib.exec`                  | `tlib.run`                                         |
+| ------------------- | ---------------------------- | -------------------------------------------------- |
+| Executes command?   | ✅ Yes                       | ✅ Yes                                             |
+| Captures stdout?    | ❌ No                        | ✅ Yes                                             |
+| Captures stderr?    | ❌ No                        | ✅ Yes (via `2>&1`)                                |
+| Returns exit code?  | ✅ Yes (depends on platform) | ✅ Yes (detailed with `io.popen`)                  |
+| Use case            | Simple command execution     | Command execution with output inspection           |
+| Richer abstraction? | ❌ Minimal wrapper           | ✅ Full-featured with output and error information |
 
 ---
 
@@ -422,6 +438,7 @@ local output, ok, code, cmd = tlib.run("ls", "/tmp")
 📄 Prints all keys and values from a Lua table — useful for debugging.
 
 💡 Example:
+
 ```lua
 tlib.check_lib({ foo = "bar", version = "1.0" })
 ```
